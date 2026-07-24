@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Brochure Digital - Pautas MEP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fuentes estilo Periódico / Revista Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-primary: #0f2c59;    
+            --brand-success: #005b41;    
+            --brand-danger: #800020;     
+            --brand-secondary: #008080;  
+            --text-main: #1a1a1a;
+            --text-muted: #4a5568;
+            --bg-accent: #f8f9fa;
+            --border-color: #cbd5e1;
+            --fold-shadow: rgba(0, 0, 0, 0.06);
+            
+            --font-editorial: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #edf2f7;
+            color: var(--text-main);
+            line-height: 1.65;
+            padding: 30px 15px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .brochure-container {
+            max-width: 1700px;
+            margin: 0 auto;
+            perspective: 2500px; 
+        }
+
+        /* ENCABEZADO ESTILO PERIÓDICO / EDITORIAL */
+        .premium-header {
+            text-align: center;
+            padding: 10px 0 35px 0;
+            border-bottom: 2px solid #cbd5e1;
+            margin-bottom: 35px;
+        }
+
+        .mep-logo-placeholder {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .main-title-page {
+            font-family: var(--font-editorial);
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #0f172a;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ÁREA DE TRABAJO AMPLIA */
+        .workspace-brochure {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 50px 30px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        .helper-text {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            background: #f1f5f9;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* MAQUINARIA DINÁMICA DEL TRÍPTICO */
+        .triptico-dynamic-machinery {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .triptico-dynamic-machinery.fully-open {
+            flex-direction: row;
+            max-width: 1600px;
+            min-height: 850px;
+            box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.18);
+        }
+
+        /* PANELES INDIVIDUALES */
+        .face-panel {
+            background: #ffffff;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backface-visibility: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .triptico-dynamic-machinery.fully-open .face-panel {
+            width: calc(100% / 3);
+            cursor: pointer;
+        }
+
+        /* Pliegues de hoja */
+        .triptico-dynamic-machinery.fully-open .face-panel:not(:last-child) {
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+            box-shadow: inset -15px 0 20px -15px var(--fold-shadow);
+        }
+        .triptico-dynamic-machinery.fully-open .face-panel:not(:first-child) {
+            box-shadow: inset 15px 0 20px -15px var(--fold-shadow);
+        }
+
+        .panel-fase1 { border-top: 8px solid var(--brand-primary); }
+        .panel-fase2 { border-top: 8px solid var(--brand-success); }
+        .panel-fase3 { border-top: 8px solid var(--brand-danger); }
+        .panel-reverso { border-top: 8px solid var(--brand-secondary); background: #fafafa; width: 100% !important; }
+
+        /* EFECTO ZOOM / ENFOQUE */
+        .triptico-dynamic-machinery.fully-open .face-panel.focused-zone {
+            width: 60%;
+            background: #ffffff;
+            cursor: zoom-out;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .triptico-dynamic-machinery.fully-open .face-panel.muted-zone {
+            width: 20%;
+            opacity: 0.35;
+            transform: scale(0.98);
+            filter: blur(1px);
+        }
+
+        .zoom-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.75rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .triptico-dynamic-machinery.fully-open .face-panel:hover .zoom-indicator {
+            opacity: 1;
+        }
+
+      /* PORTADA ESTILO REVISTA PRENSA */
+.portada-exclusiva {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-image: linear-gradient(to bottom, rgba(15, 44, 89, 0.85), rgba(5, 15, 35, 0.95)), 
+                      url('https://static.vecteezy.com/system/resources/previews/007/435/173/non_2x/continuous-line-drawing-of-young-man-feeling-sad-tired-and-worried-suffering-from-depression-in-mental-health-illustration-free-vector.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 950px;
+    padding: 60px 40px;
+    border-radius: 12px;
+    color: #ffffff;
+    position: relative;
+}
+
+        .mep-badge-portada {
+            background: transparent;
+            padding: 6px 18px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .pauta-number-portada {
+            font-family: var(--font-editorial);
+            font-size: 5.5rem;
+            font-weight: 900;
+            line-height: 0.9;
+            margin-top: 15px;
+            color: #ffffff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .portada-main-content { margin: 0px 0; }
+
+        .face-title-portada {
+            font-family: var(--font-editorial);
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.25;
+            color: #ffffff;
+            font-style: italic;
+            max-width: 95%;
+            margin: 0 auto;
+        }
+
+        .btn-fold-portada {
+            background: #ffffff;
+            color: var(--brand-primary);
+            border: none;
+            padding: 16px 40px;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-fold-portada:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* CONTENEDORES MULTIMEDIA (IMÁGENES Y VIDEO) */
+        .media-container {
+            margin: 18px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .media-container img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-caption {
+            font-size: 0.8rem;
+            color: #64748b;
+            padding: 8px 12px;
+            background: #f1f5f9;
+            text-align: center;
+            font-style: italic;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 8px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* TITULARES INTERNOS EDITORIALES */
+        .panel-badge { 
+            align-self: flex-start; 
+            padding: 4px 12px; 
+            font-weight: 700; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            margin-bottom: 15px; 
+            display: inline-block;
+            letter-spacing: 1.5px;
+            border-radius: 2px;
+        }
+        .panel-fase1 .panel-badge { background: #e0f2fe; color: #0369a1; }
+        .panel-fase2 .panel-badge { background: #dcfce7; color: #15803d; }
+        .panel-fase3 .panel-badge { background: #fee2e2; color: #b91c1c; }
+        .panel-reverso .panel-badge { background: #f0f9ff; color: #0369a1; }
+
+        .face-title { 
+            font-family: var(--font-editorial);
+            font-size: 1.8rem;
+            font-weight: 800; 
+            margin-bottom: 6px; 
+            color: #0f172a; 
+            line-height: 1.2;
+        }
+
+        .face-subtitle { 
+            font-size: 0.95rem; 
+            font-weight: 500; 
+            color: #64748b; 
+            margin-bottom: 20px; 
+            font-style: italic;
+        }
+
+        .subsection-title {
+            font-family: var(--font-editorial);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 22px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+
+        /* BLOQUES DE NOTAS Y ALERTAS */
+        .note-box {
+            background-color: #fffaf0;
+            border-left: 4px solid #dd6b20;
+            padding: 15px;
+            margin: 18px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.92rem;
+        }
+
+        .alert-box {
+            background-color: #fff5f5;
+            border-left: 4px solid var(--brand-danger);
+            padding: 15px;
+            margin: 18px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.92rem;
+        }
+
+        .form-list-container {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 22px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .form-list-container ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .form-list-container li {
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 8px;
+            font-size: 0.92rem;
+        }
+        .form-list-container li:last-child { border-bottom: none; }
+
+        p { font-size: 0.95rem; color: #334155; margin-bottom: 12px; text-align: justify; }
+        ul, ol { padding-left: 20px; margin-bottom: 15px; }
+        li { font-size: 0.95rem; color: #334155; margin-bottom: 8px; text-align: justify; }
+        strong { color: #0f172a; font-weight: 700; }
+
+        /* BOTONES DE ACCIÓN */
+        .btn-nav-portada {
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        .btn-nav-portada:hover {
+            background: var(--brand-primary);
+            transform: translateY(-1px);
+        }
+
+        .reverso-btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-action-reverso {
+            background: var(--brand-secondary); color: white; border: none; padding: 12px 28px; border-radius: 4px;
+            font-family: var(--font-body); font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.25); transition: all 0.2s;
+        }
+        .btn-action-reverso:hover { background: #006666; transform: translateY(-1px); }
+        .btn-action-reverso.back-btn { background: #475569; }
+        .btn-action-reverso.back-btn:hover { background: #334155; }
+        
+        .btn-close-folleto {
+            background: #334155; color: white; border: none; padding: 10px 22px; border-radius: 4px;
+            font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 25px; align-self: center;
+        }
+
+        .brochure-footer { background: #0f172a; color: #94a3b8; padding: 30px; text-align: center; font-size: 0.9rem; border-radius: 12px; margin-top: 40px; }
+
+        @media (max-width: 1024px) {
+            .workspace-brochure { padding: 20px 10px; }
+            .triptico-dynamic-machinery { display: flex; flex-direction: column !important; max-width: 100% !important; box-shadow: none !important; }
+            .face-panel { width: 100% !important; border-radius: 12px !important; padding: 25px 18px; margin-bottom: 20px; }
+            #cara-fase1, #cara-fase2, #cara-fase3, #panel-reverso-completo { display: block !important; border-top: 6px solid; }
+            .portada-exclusiva, .btn-fold-portada, .reverso-btn-group, .zoom-indicator, .btn-close-folleto { display: none !important; }
+            #contenidoFase1 { display: block !important; }
+            .main-title-page { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="brochure-container">
+        
+        <div class="premium-header">
+            <span class="mep-logo-placeholder">Ministerio de Educación Pública</span>
+            <h1 class="main-title-page">Protocolo y Pautas de Actuación ante Situaciones de Vulnerabilidad, Riesgo Suicida, Autolesiones y Posvención en el Centro Educativo</h1>
+        </div>
+
+        <div class="workspace-brochure">
+            
+            <!-- CONTENEDOR PRINCIPAL DEL TRÍPTICO -->
+            <div class="triptico-dynamic-machinery" id="maquinariaFolleto">
+                
+                <!-- CARA 1: PORTADA Y FASE 1 -->
+                <div class="face-panel panel-fase1" id="cara-fase1" onclick="gestionarEnfoquePanel(this, event)">
+                    <div class="zoom-indicator" id="z-ind1"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</div>
+
+                    <!-- PORTADA ESTILO REVISTA -->
+                    <div class="portada-exclusiva" id="portadaLimpia">
+                        <div class="portada-header-tags">
+                            <span class="mep-badge-portada">Protocolo Oficial MEP</span>
+
+                         <br>
+
+                            <div class="pauta-number-portada">Pauta 6</div>
+                        </div>
+                        
+                        <div class="portada-main-content">
+                            <h3 class="face-title-portada">
+                               Brochure Digital
+                            </h3>
+                        </div>
+                        
+                        <button class="btn-fold-portada" onclick="abrirLasTresFases(event)">
+                            ¡Da clic aquí! para abrir el brochure <i class="fa-solid fa-book-open"></i>
+                        </button>
+                    </div>
+
+                    <!-- CONTENIDO INTERNO DE FASE 1 -->
+                    <div id="contenidoFase1" style="display: none;">
+                        <span class="panel-badge">Paso 1 · Detección y Comunicación</span>
+                        <h3 class="face-title">Detección y Comunicación</h3>
+                        <p class="face-subtitle">Se debe aplicar las siguientes disposiciones de actuación inmediata.</p>
+                        
+                        <!-- IMAGEN SECCIÓN 1 -->
+                        <div class="media-container">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Detección y Comunicación">
+                            <div class="media-caption"><i class="fa-solid fa-camera"></i> Protocolo de alerta temprana en la comunidad educativa</div>
+                        </div>
+
+                        <div class="subsection-title"><i class="fa-solid fa-eye"></i> A. Detección</div>
+                        <ul>
+                            <li><strong>Origen de la información:</strong> Se puede obtener mediante la escucha, observación o reporte directo de estudiantes, familias o miembros de la comunidad educativa.</li>
+                            <li><strong>Responsabilidad de actuación:</strong> Las personas funcionarias tienen la responsabilidad de actuar de forma inmediata. No se requiere solicitud escrita. <em>(Completar formulario N°2)</em></li>
+                            <li><strong>Acciones inmediatas:</strong>
+                                <ol>
+                                    <li>Llamar al <strong>9-1-1</strong> de inmediato y anotar el número de reporte.</li>
+                                    <li>De forma excepcional, si no se concreta el traslado inmediato con el 9-1-1 y la vida del estudiante está en riesgo, movilizar en transporte disponible acompañado por personal que designe la Dirección (preferiblemente 2 personas: quien conduce y quien supervisa). <em>(Completar formulario de traslado)</em></li>
+                                </ol>
+                            </li>
+                        </ul>
+
+                        <br>
+
+                       
+                        <div class="subsection-title"><i class="fa-solid fa-bullhorn"></i> B. Comunicación</div>
+                        <ul>
+                            <li><strong>A la Dirección:</strong> Quien reciba la información debe comunicarla de inmediato. La ausencia o falta de apoyo de la autoridad no interrumpe el protocolo. <em>(Completar formulario N°2)</em></li>
+                            <li><strong>A la familia:</strong> Informar inmediatamente a la persona encargada legal o contacto de emergencia. Si el hogar representa un factor de riesgo, remitir a la Oficina Local del PANI correspondiente. <em>(Completar formulario N°7)</em></li>
+                        </ul>
+
+                        <div class="note-box">
+                            <strong><i class="fa-solid fa-circle-info"></i> Notas informativas:</strong>
+                            <ol>
+                                <li>No brindar detalles de la situación por teléfono; únicamente solicitar la presencia urgente.</li>
+                                <li>Garantizar la confidencialidad de los datos del estudiante en todo momento.</li>
+                            </ol>
+                        </div>
+                        <br>
+
+                     
+
+                        <!-- BOTÓN PARA REGRESAR A PORTADA -->
+                        <button class="btn-nav-portada" onclick="volverAPortadaInicial(event)">
+                            <i class="fa-solid fa-house"></i> Volver a Portada
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARA 2: FASE 2 -->
+                <div class="face-panel panel-fase2" id="cara-fase2" style="display: none;" onclick="gestionarEnfoquePanel(this, event)">
+                    <div class="zoom-indicator" id="z-ind2"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</div>
+                    <span class="panel-badge">Paso 2 · Intervención</span>
+                    <h3 class="face-title">Medidas de Actuación</h3>
+                    <br>
+                    <p class="face-subtitle">El Centro Educativo tiene la obligación de articular acciones interinstitucionales para asegurar un abordaje integral del comportamiento suicida. 
+                     Se debe continuar con la aplicación de las siguientes premisas:</p>
+
+                    
+
+                    <div class="subsection-title"><i class="fa-solid fa-handshake"></i> A. Articulación Inter e Intrainstitucional</div>
+                    <ul>
+                        <li>Realizar de forma inmediata la referencia a emergencias de la C.C.S.S. <em>(Completar formulario N°9)</em>.</li>
+                        <li>Copiar el formulario a Comisión Local de Salud Mental  (COLOSAM) y Consejo Regional de Salud Mental (CORESAM).</li>
+                        <li>La Dirección puede solicitar acompañamiento a la Dirección Regional de Educación y al Equipo Técnico Regional (ETIR). <em>(Completar formulario N°10)</em>.</li>
+                    </ul>
+
+                    <div class="subsection-title"><i class="fa-solid fa-shield-halved"></i> B. Medidas de Protección</div>
+                    <ul>
+                        <li>Implementar medidas inmediatas para resguardar la seguridad del estudiante.</li>
+                        <li>Garantizar el acceso y permanencia a la educación inclusiva.</li>
+                        <li>Recomendar ajustes razonables metodológicos.</li>
+                        <li>Referir al comité correspondiente en caso de apoyo educativo y aplicar protocolo de administración de medicamentos.</li>
+                        <li>Acatar obligatoriamente las recomendaciones médicas de salud.</li>
+                        <li>Reforzar el cuido docente en recreos y momentos clave.</li>
+                        <li>Informar a la familia sobre las medidas implementadas.</li>
+                    </ul>
+
+                    <div class="subsection-title"><i class="fa-solid fa-users-gear"></i> C. Acciones Psico Socioeducativas</div>
+                    <ul>
+                        <li>Referir a equipos interdisciplinarios, Orientación y Apoyo de Problemas Emocionales si el centro los posee.</li>
+                        <li>Solicitar apoyo a asesorías de Educación Especial y ETIR.</li>
+                        <li>Incluir en la planificación del equipo Convivir la promoción de la salud mental.</li>
+                        <li>Establecer reuniones y articulación periódica con las familias.</li>
+                        <li>Solicitar apoyo técnico externo (Ministerio de Salud, Universidades avaladas, etc.).</li>
+                        <li>En casos de autolesiones, las solicitudes de ajuste de uniforme (mangas, buzos) deben remitirse al Consejo Asesor Regional (CAR).</li>
+                    </ul>
+
+                    <div class="alert-box">
+                        <strong><i class="fa-solid fa-triangle-exclamation"></i> D. Posvención (Suicidio Consumado)</strong>
+                        <ul>
+                            <li>No tocar ni mover elementos en la escena.</li>
+                            <li>Restringir el acceso total al área del suceso.</li>
+                            <li>Prohibido realizar publicaciones sobre métodos o causas.</li>
+                            <li>No colocar altares de la persona fallecida en el centro educativo.</li>
+                            <li>Permitir asistencia justificada de compañeros a los funerales.</li>
+                            <li>Cambiar el aula fija para renovar el entorno de los compañeros.</li>
+                            <li>Notificar de inmediato al superior y <strong>suspender lecciones</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection-title"><i class="fa-solid fa-file-lines"></i> E. Informe de Actuación</div>
+                    <p>Elaborar un informe detallado de las acciones de protección y seguimiento en un plazo máximo de <strong>30 días naturales</strong>.</p>
+
+                    <br>
+
+                    <p>Este informe debe registrar de manera detallada las acciones de protección, atención y seguimiento implementados por la institución. Completar formulario N°11.</p>
+                
+                
+                </div>
+
+                <!-- CARA 3: FASE 3 -->
+                <div class="face-panel panel-fase3" id="cara-fase3" style="display: none;" onclick="gestionarEnfoquePanel(this, event)">
+                    <div class="zoom-indicator" id="z-ind3"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</div>
+                    <span class="panel-badge">Paso 3 · Seguimiento</span>
+                    <h3 class="face-title">Seguimiento y Cierre</h3>
+
+                    <br>
+
+                    <p class="face-subtitle">Evaluación de efectividad y finalización de expediente.</p>
+                    
+                    <!-- IMAGEN SECCIÓN 3 -->
+                    <div class="media-container">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" alt="Seguimiento de casos">
+                        <div class="media-caption"><i class="fa-solid fa-camera"></i> Monitoreo y cierre efectivo de expedientes</div>
+                    </div>
+
+                    <div class="subsection-title"><i class="fa-solid fa-clock-rotate-left"></i> A. Seguimiento de Medidas</div>
+                    <p>Dar seguimiento continuo durante <strong>al menos tres meses</strong> a las acciones aplicadas:</p>
+                    <ul>
+                        <li>Realizar controles mensuales de la situación.</li>
+                        <li>Verificar asistencia a citas de salud con comprobantes en mano.</li>
+                        <li>Solicitar apoyo al COLOSAM si la C.C.S.S. demora las citas.</li>
+                        <li>Acatar recomendaciones de los servicios de salud y comprobar apoyos educativos.</li>
+                        <li>Evaluar efectividad y realizar reajustes periódicos.</li>
+                    </ul>
+
+                    <div class="subsection-title"><i class="fa-solid fa-folder-closed"></i> B. Cierre del Expediente</div>
+                    <p>•	Una vez finalizado el período de seguimiento y comprobado que las medidas fueron efectivas, se procede al cierre del expediente con la aprobación de la dirección del centro educativo, completando el apartado correspondiente del <strong>Formulario N°12</strong>.</p>
+
+                     <br>
+
+                   <!-- ESPACIO REPRODUCTOR DE VIDEO SECCIÓN 2 -->
+<div class="media-container">
+    <div class="video-wrapper">
+        <iframe 
+            src="https://www.youtube.com/embed/VUM6cHqIrxo" 
+            title="¿Cómo prevenir el suicidio en adolescentes?" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <div class="media-caption">
+        <i class="fa-solid fa-circle-play"></i> Video: Abordaje integral y medidas de protección
+    </div>
+</div>
+                    <button class="btn-close-folleto" onclick="cerrarHaciaElReverso(event)"><i class="fa-solid fa-book-bookmark"></i> Ver Guía de Formularios</button>
+                </div>
+
+               
+
+                <!-- CARA REVERSO (ANEXOS / CONTRAPORTADA) -->
+                <div class="face-panel panel-reverso" id="panel-reverso-completo" style="display: none;">
+                    <span class="panel-badge">Anexo de Referencia</span>
+                    <h3 class="face-title" style="color:var(--brand-secondary);"><i class="fa-solid fa-file-circle-check"></i> Guía Oficial de Formularios</h3>
+                    <p style="margin-bottom: 15px;"><em>La compilación y llenado debe ser realizado por la persona encargada o la Dirección. Se utilizan únicamente los formularios requeridos según el caso.</em></p>
+
+                    <div class="form-list-container">
+                        <ul>
+                            <li><strong>Formulario N°2:</strong> Información inicial y comunicación escrita a la Dirección ante presuntas situaciones de vulnerabilidad y riesgo.</li>
+                            <li><strong>Formulario N°7:</strong> Referencia a instituciones (C.C.S.S., PANI, RISA, IAFA). Garantiza confidencialidad según Art. 49 del Código de la Niñez y la Adolescencia.</li>
+                            <li><strong>Formulario N°9:</strong> Referencia interinstitucional por riesgo suicida o salud mental (Copia obligatoria a COLOSAM y CORESAM).</li>
+                            <li><strong>Formulario N°10:</strong> Referencia a dependencias internas del MEP (Dirección Regional, Asesorías, UPRE, PANEA, etc.).</li>
+                            <li><strong>Formulario N°12:</strong> Utilizado para el cierre oficial del expediente tras el seguimiento.</li>
+                            <li><strong>Formulario de traslado:</strong> Documento requerido para traslado excepcional en vehículos autorizados de la institución.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reverso-btn-group">
+                        <button class="btn-action-reverso back-btn" onclick="regresarAlFolletoAbierto(event)">
+                            <i class="fa-solid fa-arrow-left"></i> Volver a los artículos
+                        </button>
+                        <button class="btn-action-reverso" onclick="volverAPortadaInicial(event)">
+                            <i class="fa-solid fa-house"></i> Ir a Portada
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="brochure-footer">
+            <p>© 2026 ULICORI</p>
+            <p style="font-size: 0.85rem; margin-top: 5px;">Elaborado por los estudiantes:Rebeca, Keylin y Bryan.</p>
+        </div>
+
+    </div>
+
+    <script>
+        const machinery = document.getElementById('maquinariaFolleto');
+        const portadaLimpia = document.getElementById('portadaLimpia');
+        const contenidoFase1 = document.getElementById('contenidoFase1');
+        const caraFase2 = document.getElementById('cara-fase2');
+        const caraFase3 = document.getElementById('cara-fase3');
+        const panelReverso = document.getElementById('panel-reverso-completo');
+        const instruccion = document.getElementById('instruccionFolleto');
+
+        let brochureAbierto = false;
+
+        function abrirLasTresFases(e) {
+            if (e) e.stopPropagation();
+            
+            machinery.className = "triptico-dynamic-machinery fully-open";
+            portadaLimpia.style.display = "none";
+            panelReverso.style.display = "none";
+            
+            contenidoFase1.style.display = "block";
+            caraFase2.style.display = "flex";
+            caraFase3.style.display = "flex";
+            
+            brochureAbierto = true;
+            machinery.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function gestionarEnfoquePanel(panelSeleccionado, event) {
+            if (!brochureAbierto || window.innerWidth <= 1024) return;
+            
+            if (event.target.tagName === 'BUTTON' || event.target.closest('button') || event.target.tagName === 'IFRAME') return;
+
+            const paneles = [document.getElementById('cara-fase1'), caraFase2, caraFase3];
+            const indicador = panelSeleccionado.querySelector('.zoom-indicator');
+
+            if (panelSeleccionado.classList.contains('focused-zone')) {
+                paneles.forEach(p => {
+                    p.classList.remove('focused-zone', 'muted-zone');
+                    const ind = p.querySelector('.zoom-indicator');
+                    if(ind) ind.innerHTML = "<i class='fa-solid fa-magnifying-glass-plus'></i> Ampliar";
+                });
+                instruccion.innerHTML = "<i class='fa-solid fa-hand-pointer'></i> Haz clic en una columna para ampliarla.";
+            } else {
+                paneles.forEach(p => {
+                    if (p === panelSeleccionado) {
+                        p.classList.add('focused-zone');
+                        p.classList.remove('muted-zone');
+                        if(indicador) indicador.innerHTML = "<i class='fa-solid fa-magnifying-glass-minus'></i> Restablecer";
+                    } else {
+                        p.classList.remove('focused-zone');
+                        p.classList.add('muted-zone');
+                        const ind = p.querySelector('.zoom-indicator');
+                        if(ind) ind.innerHTML = "<i class='fa-solid fa-magnifying-glass-plus'></i> Ampliar";
+                    }
+                });
+                instruccion.innerHTML = "<i class='fa-solid fa-circle-minus'></i> Haz clic en la sección ampliada para volver a la vista general.";
+            }
+        }
+
+        function cerrarHaciaElReverso(e) {
+            if (e) e.stopPropagation();
+            brochureAbierto = false;
+            
+            const paneles = [document.getElementById('cara-fase1'), caraFase2, caraFase3];
+            paneles.forEach(p => p.classList.remove('focused-zone', 'muted-zone'));
+
+            machinery.className = "triptico-dynamic-machinery";
+            
+            contenidoFase1.style.display = "none";
+            caraFase2.style.display = "none";
+            caraFase3.style.display = "none";
+            portadaLimpia.style.display = "none";
+            panelReverso.style.display = "flex"; 
+            
+            instruccion.innerHTML = "<i class='fa-solid fa-bookmark'></i> Anexo: Guía de Formularios.";
+            machinery.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function regresarAlFolletoAbierto(e) {
+            if (e) e.stopPropagation();
+            abrirLasTresFases(null);
+        }
+
+        function volverAPortadaInicial(e) {
+            if (e) e.stopPropagation();
+            brochureAbierto = false;
+            
+            const paneles = [document.getElementById('cara-fase1'), caraFase2, caraFase3];
+            paneles.forEach(p => p.classList.remove('focused-zone', 'muted-zone'));
+
+            machinery.className = "triptico-dynamic-machinery";
+            panelReverso.style.display = "none";
+            contenidoFase1.style.display = "none";
+            caraFase2.style.display = "none";
+            caraFase3.style.display = "none";
+            
+            portadaLimpia.style.display = "flex";
+        }
+    </script>
+</body>
+</html>
