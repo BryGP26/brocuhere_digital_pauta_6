@@ -83,6 +83,7 @@
             border: 1px solid #cbd5e1;
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
             margin-bottom: 40px;
+            overflow-x: auto;
         }
 
         .helper-text {
@@ -136,6 +137,7 @@
 
         .triptico-dynamic-machinery.fully-open .face-panel {
             width: calc(100% / 3);
+            min-width: 320px;
             cursor: pointer;
         }
 
@@ -190,23 +192,23 @@
         }
 
       /* PORTADA ESTILO REVISTA PRENSA */
-.portada-exclusiva {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    background-image: linear-gradient(to bottom, rgba(15, 44, 89, 0.85), rgba(5, 15, 35, 0.95)), 
-                      url('https://static.vecteezy.com/system/resources/previews/007/435/173/non_2x/continuous-line-drawing-of-young-man-feeling-sad-tired-and-worried-suffering-from-depression-in-mental-health-illustration-free-vector.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 950px;
-    padding: 60px 40px;
-    border-radius: 12px;
-    color: #ffffff;
-    position: relative;
-}
+      .portada-exclusiva {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+          background-image: linear-gradient(to bottom, rgba(15, 44, 89, 0.85), rgba(5, 15, 35, 0.95)), 
+                            url('https://static.vecteezy.com/system/resources/previews/007/435/173/non_2x/continuous-line-drawing-of-young-man-feeling-sad-tired-and-worried-suffering-from-depression-in-mental-health-illustration-free-vector.jpg');
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          min-height: 950px;
+          padding: 60px 40px;
+          border-radius: 12px;
+          color: #ffffff;
+          position: relative;
+      }
 
         .mep-badge-portada {
             background: transparent;
@@ -451,14 +453,23 @@
 
         .brochure-footer { background: #0f172a; color: #94a3b8; padding: 30px; text-align: center; font-size: 0.9rem; border-radius: 12px; margin-top: 40px; }
 
+        /* REGULACIÓN PARA MÓVILES: Mantiene la estructura de brochure exactamente igual */
         @media (max-width: 1024px) {
-            .workspace-brochure { padding: 20px 10px; }
-            .triptico-dynamic-machinery { display: flex; flex-direction: column !important; max-width: 100% !important; box-shadow: none !important; }
-            .face-panel { width: 100% !important; border-radius: 12px !important; padding: 25px 18px; margin-bottom: 20px; }
-            #cara-fase1, #cara-fase2, #cara-fase3, #panel-reverso-completo { display: block !important; border-top: 6px solid; }
-            .portada-exclusiva, .btn-fold-portada, .reverso-btn-group, .zoom-indicator, .btn-close-folleto { display: none !important; }
-            #contenidoFase1 { display: block !important; }
-            .main-title-page { font-size: 2rem; }
+            body { padding: 15px 5px; }
+            .workspace-brochure { padding: 15px 10px; -webkit-overflow-scrolling: touch; }
+            .main-title-page { font-size: 1.8rem; }
+            .portada-exclusiva { min-height: 600px; padding: 30px 15px; }
+            .pauta-number-portada { font-size: 3.8rem; }
+            .face-title-portada { font-size: 1.6rem; }
+            .btn-fold-portada { padding: 12px 20px; font-size: 0.85rem; }
+            
+            .triptico-dynamic-machinery.fully-open {
+                overflow-x: auto;
+                min-width: 1000px;
+            }
+            .triptico-dynamic-machinery.fully-open .face-panel {
+                min-width: 330px;
+            }
         }
     </style>
 </head>
@@ -729,7 +740,7 @@
         }
 
         function gestionarEnfoquePanel(panelSeleccionado, event) {
-            if (!brochureAbierto || window.innerWidth <= 1024) return;
+            if (!brochureAbierto) return;
             
             if (event.target.tagName === 'BUTTON' || event.target.closest('button') || event.target.tagName === 'IFRAME') return;
 
@@ -742,7 +753,7 @@
                     const ind = p.querySelector('.zoom-indicator');
                     if(ind) ind.innerHTML = "<i class='fa-solid fa-magnifying-glass-plus'></i> Ampliar";
                 });
-                instruccion.innerHTML = "<i class='fa-solid fa-hand-pointer'></i> Haz clic en una columna para ampliarla.";
+                if(instruccion) instruccion.innerHTML = "<i class='fa-solid fa-hand-pointer'></i> Haz clic en una columna para ampliarla.";
             } else {
                 paneles.forEach(p => {
                     if (p === panelSeleccionado) {
@@ -756,7 +767,7 @@
                         if(ind) ind.innerHTML = "<i class='fa-solid fa-magnifying-glass-plus'></i> Ampliar";
                     }
                 });
-                instruccion.innerHTML = "<i class='fa-solid fa-circle-minus'></i> Haz clic en la sección ampliada para volver a la vista general.";
+                if(instruccion) instruccion.innerHTML = "<i class='fa-solid fa-circle-minus'></i> Haz clic en la sección ampliada para volver a la vista general.";
             }
         }
 
@@ -775,7 +786,7 @@
             portadaLimpia.style.display = "none";
             panelReverso.style.display = "flex"; 
             
-            instruccion.innerHTML = "<i class='fa-solid fa-bookmark'></i> Anexo: Guía de Formularios.";
+            if(instruccion) instruccion.innerHTML = "<i class='fa-solid fa-bookmark'></i> Anexo: Guía de Formularios.";
             machinery.scrollIntoView({ behavior: 'smooth' });
         }
 
