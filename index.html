@@ -192,23 +192,40 @@
         }
 
       /* PORTADA ESTILO REVISTA PRENSA */
-      .portada-exclusiva {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
-          text-align: center;
-          background-image: linear-gradient(to bottom, rgba(15, 44, 89, 0.85), rgba(5, 15, 35, 0.95)), 
-                            url('https://static.vecteezy.com/system/resources/previews/007/435/173/non_2x/continuous-line-drawing-of-young-man-feeling-sad-tired-and-worried-suffering-from-depression-in-mental-health-illustration-free-vector.jpg');
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center;
-          min-height: 950px;
-          padding: 60px 40px;
-          border-radius: 12px;
-          color: #ffffff;
-          position: relative;
-      }
+.portada-exclusiva {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    
+    /* Gradiente sutil para dar legibilidad sin oscurecer la foto */
+    background-image: linear-gradient(
+        to bottom, 
+        rgba(15, 44, 89, 0.20), 
+        rgba(5, 15, 35, 0.45)
+    ), 
+    url('https://www.buzzworthy.com/wp-content/uploads/2016/06/o-EMPTY-CLASSROOM.jpg');
+    
+    /* Mantiene la foto encuadrada de forma nítida */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    
+    /* Control de dimensiones para evitar que se vea muy grande */
+    min-height: 550px; 
+    height: 70vh;
+    max-height: 750px;
+    
+    padding: 40px 30px;
+    border-radius: 12px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    
+    /* Sombras para asegurar que el texto siga leyéndose bien sobre la foto clara */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
 
         .mep-badge-portada {
             background: transparent;
@@ -682,16 +699,166 @@
                     <h3 class="face-title" style="color:var(--brand-secondary);"><i class="fa-solid fa-file-circle-check"></i> Guía Oficial de Formularios</h3>
                     <p style="margin-bottom: 15px;"><em>La compilación y llenado debe ser realizado por la persona encargada o la Dirección. Se utilizan únicamente los formularios requeridos según el caso.</em></p>
 
-                    <div class="form-list-container">
-                        <ul>
-                            <li><strong>Formulario N°2:</strong> Información inicial y comunicación escrita a la Dirección ante presuntas situaciones de vulnerabilidad y riesgo.</li>
-                            <li><strong>Formulario N°7:</strong> Referencia a instituciones (C.C.S.S., PANI, RISA, IAFA). Garantiza confidencialidad según Art. 49 del Código de la Niñez y la Adolescencia.</li>
-                            <li><strong>Formulario N°9:</strong> Referencia interinstitucional por riesgo suicida o salud mental (Copia obligatoria a COLOSAM y CORESAM).</li>
-                            <li><strong>Formulario N°10:</strong> Referencia a dependencias internas del MEP (Dirección Regional, Asesorías, UPRE, PANEA, etc.).</li>
-                            <li><strong>Formulario N°12:</strong> Utilizado para el cierre oficial del expediente tras el seguimiento.</li>
-                            <li><strong>Formulario de traslado:</strong> Documento requerido para traslado excepcional en vehículos autorizados de la institución.</li>
-                        </ul>
-                    </div>
+                    <!-- ESTILOS CSS ACTUALIZADOS -->
+<style>
+    /* Enlaces de formularios siempre visibles */
+    .link-formulario {
+        color: #0d6efd !important;
+        text-decoration: underline !important;
+        cursor: pointer;
+        font-weight: bold;
+        display: inline-block;
+    }
+    .link-formulario:hover {
+        color: #0a58ca !important;
+        text-decoration: underline !important;
+    }
+
+    /* Fondo oscuro del modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+    }
+
+    /* Contenedor de la imagen en el modal */
+    .modal-contenedor-img {
+        position: relative;
+        max-width: 90%;
+        max-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+
+    /* Imagen normal en el visor */
+    .modal-contenedor-img img {
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+        cursor: zoom-in;
+        transition: transform 0.25s ease-in-out;
+    }
+
+    /* Zoom moderado (se cambió la escala a 1.2 para ser más sutil) */
+    .modal-contenedor-img img.imagen-zoomed {
+        transform: scale(1.5); /* Ajuste moderado de aumento */
+        cursor: zoom-out;
+    }
+
+    /* Botón de cerrar (X) */
+    .cerrar-btn {
+        position: fixed;
+        top: 25px;
+        right: 35px;
+        color: #ffffff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+        line-height: 1;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.4);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cerrar-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+    }
+</style>
+
+<div class="form-list-container">
+    <ul>
+        <li>
+            <a href="#" onclick="abrirModalImagen(event, 'https://gcore.jsdelivr.net/gh/BryGP26/imagenes@main/Formulario_2.png', 'Formulario N°2')" class="link-formulario">
+                Formulario N°2:
+            </a> 
+            Información inicial y comunicación escrita a la Dirección ante presuntas situaciones de vulnerabilidad y riesgo.
+        </li>
+        <li>
+            <a href="#" onclick="abrirModalImagen(event, 'https://gcore.jsdelivr.net/gh/BryGP26/imagenes@main/Formulario_7.png', 'Formulario N°7')" class="link-formulario">
+                Formulario N°7:
+            </a> 
+            Referencia a instituciones (C.C.S.S., PANI, RISA, IAFA). Garantiza confidencialidad según Art. 49 del Código de la Niñez y la Adolescencia.
+        </li>
+        <li>
+            <a href="#" onclick="abrirModalImagen(event, 'https://gcore.jsdelivr.net/gh/BryGP26/imagenes@main/Formulario_9.png', 'Formulario N°9')" class="link-formulario">
+                Formulario N°9:
+            </a> 
+            Referencia interinstitucional por riesgo suicida o salud mental (Copia obligatoria a COLOSAM y CORESAM).
+        </li>
+        <li>
+            <a href="#" onclick="abrirModalImagen(event, 'https://gcore.jsdelivr.net/gh/BryGP26/imagenes@main/Formulario_10.png', 'Formulario N°10')" class="link-formulario">
+                Formulario N°10:
+            </a> 
+            Referencia a dependencias internas del MEP (Dirección Regional, Asesorías, UPRE, PANEA, etc.).
+        </li>
+        <li>
+            <a href="#" onclick="abrirModalImagen(event, 'https://gcore.jsdelivr.net/gh/BryGP26/imagenes@main/Formulario_12.png', 'Formulario N°12')" class="link-formulario">
+                Formulario N°12:
+            </a> 
+            Utilizado para el cierre oficial del expediente tras el seguimiento.
+        </li>
+        <li>
+            <a href="#" onclick="abrirModalImagen(event, 'https://gcore.jsdelivr.net/gh/BryGP26/imagenes@main/Formulario_3.png', 'Formulario de traslado')" class="link-formulario">
+                Formulario N°12 (de traslado):
+            </a> 
+            Documento requerido para traslado excepcional en vehículos autorizados de la institución.
+        </li>
+    </ul>
+</div>
+
+<div id="modalImagen" class="modal-overlay" onclick="cerrarModalImagen(event)">
+    <span class="cerrar-btn" onclick="cerrarModalImagen(event, true)">&times;</span>
+    <div class="modal-contenedor-img">
+        <img id="imgVisor" src="" alt="Vista previa del formulario" onclick="toggleZoom(event)">
+    </div>
+</div>
+
+<script>
+    function abrirModalImagen(event, urlImagen, titulo) {
+        event.preventDefault(); 
+        const modal = document.getElementById('modalImagen');
+        const img = document.getElementById('imgVisor');
+        
+        img.src = urlImagen;
+        img.alt = titulo;
+        img.classList.remove('imagen-zoomed');
+        modal.style.display = 'flex';
+    }
+
+    function toggleZoom(event) {
+        event.stopPropagation();
+        const img = document.getElementById('imgVisor');
+        img.classList.toggle('imagen-zoomed');
+    }
+
+    function cerrarModalImagen(event, forzarCierre = false) {
+        if (forzarCierre || event.target.id === 'modalImagen') {
+            const modal = document.getElementById('modalImagen');
+            const img = document.getElementById('imgVisor');
+            modal.style.display = 'none';
+            img.src = '';
+            img.classList.remove('imagen-zoomed');
+        }
+    }
+</script>
 
                     <div class="reverso-btn-group">
                         <button class="btn-action-reverso back-btn" onclick="regresarAlFolletoAbierto(event)">
@@ -706,10 +873,15 @@
             </div>
         </div>
 
-        <div class="brochure-footer">
-            <p>© 2026 ULICORI</p>
-            <p style="font-size: 0.85rem; margin-top: 5px;">Elaborado por los estudiantes:Rebeca, Keylin y Bryan.</p>
-        </div>
+        <div class="brochure-footer-horizontal">
+    <img src="https://th.bing.com/th/id/R.45082b05458f0fd09a8e4d29c0c44b6f?rik=WiYyQuJG00GYsQ&riu=http%3a%2f%2funicarrera.com%2fwp-content%2fuploads%2f2015%2f03%2fUniversidad-Libre-de-Costa-Rica.jpg&ehk=xeAh3KQhuxGV%2fUqSRBbKeyYXsg3B%2bvK0zG3HsWdlqW0%3d&risl=&pid=ImgRaw&r=0" 
+         alt="Logo ULICORI" 
+         class="footer-logo-horiz">
+    <div class="footer-text">
+        <p class="copyright">© 2026 ULICORI</p>
+        <p class="credits">Elaborado por los estudiantes: <span><br>Bryan Gómez Peña.<br> Keylin Flores Elizondo. <br>Rebeca Martinez Rivas.</span></p>
+    </div>
+</div>
 
     </div>
 
@@ -810,6 +982,42 @@
             
             portadaLimpia.style.display = "flex";
         }
+
     </script>
+
+    <style>
+   
+   .brochure-footer-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+    color: #ffffff;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-logo-horiz {
+    max-width: 100px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.footer-text {
+    text-align: left; /* Alineado a la izquierda al estar junto al logo */
+}
+
+.footer-text .copyright {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.footer-text .credits {
+    font-size: 0.8rem;
+    margin-top: 2px;
+    opacity: 0.85;
+}
+    </style>
 </body>
 </html>
